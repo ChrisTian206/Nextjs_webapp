@@ -15,7 +15,7 @@ model Ticket {
   id Int @id @default(autoincrement())
   title String @db.VarChar(255)
   description String @db.Text()
-  statue Status @default(OPEN)
+  status Status @default(OPEN)
   priority Priority @default(MEDIUM)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
