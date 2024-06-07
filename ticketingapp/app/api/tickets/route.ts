@@ -8,6 +8,8 @@ export async function POST(request: NextRequest) {
     //safeParse() is a z.object method
     const validation = ticketSchema.safeParse(body)
 
+    console.log("validation from tickets api: ", validation?.error)
+
     if (!validation.success) {
         return NextResponse.json(validation.error.format(), { status: 400 });
     }
