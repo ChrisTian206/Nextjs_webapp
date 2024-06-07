@@ -25,9 +25,9 @@ const TicketForm = () => {
     }
 
     return (
-        <>
+        <div className='rounded-md border w-full p-4'>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 w-full'>
                     <FormField
                         control={form.control}
                         name="title"
@@ -45,7 +45,7 @@ const TicketForm = () => {
                         name='description'
                         control={form.control}
                         render={({ field }) => (
-                            <SimpleMDE />
+                            <SimpleMDE placeholder='description' {...field} />
                         )} />
 
                     <div className='flex w-full space-x-4'>
@@ -60,20 +60,44 @@ const TicketForm = () => {
                                             <SelectTrigger>
                                                 <SelectValue placeholder="status..." />
                                             </SelectTrigger>
-
-                                            <SelectContent>
-                                                <SelectItem value='OPEN'>Open</SelectItem>
-                                                <SelectItem value='STARTED'>Started</SelectItem>
-                                                <SelectItem value='CLOSED'>Closed</SelectItem>
-                                            </SelectContent>
                                         </FormControl>
+
+                                        <SelectContent>
+                                            <SelectItem value='OPEN'>Open</SelectItem>
+                                            <SelectItem value='STARTED'>Started</SelectItem>
+                                            <SelectItem value='CLOSED'>Closed</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormItem>
+                            )} />
+                    </div>
+
+                    <div className='flex w-full space-x-4'>
+                        <FormField
+                            control={form.control}
+                            name="priority"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Priority</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="priority..." />
+                                            </SelectTrigger>
+                                        </FormControl>
+
+                                        <SelectContent>
+                                            <SelectItem value='LOW'>Low</SelectItem>
+                                            <SelectItem value='MEDIUM'>Medium</SelectItem>
+                                            <SelectItem value='HIGH'>High</SelectItem>
+                                        </SelectContent>
                                     </Select>
                                 </FormItem>
                             )} />
                     </div>
                 </form>
             </Form>
-        </>
+        </div>
 
     )
 }
