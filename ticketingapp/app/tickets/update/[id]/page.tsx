@@ -16,6 +16,11 @@ const TicketForm = dynamic(() => import("@/components/TicketForm"), {
 })
 
 const UpdateTicket = async ({ params }: Props) => {
+    /** DB access & SSR
+     * A little detail here. Normally when we build a React page, we access database using
+     * axios to request data from backend api. But in nextjs, since we are doing SSR, we have
+     * access to database directly. That's why we are able to do prisma.find() below w/o axios.
+     */
     const ticket = await prisma?.ticket.findUnique({
         where: { id: parseInt(params.id) }
     })
