@@ -39,6 +39,14 @@ const TicketForm = ({ ticket }: Props) => {
 
             if (ticket) {
                 await axios.patch("/api/tickets/" + ticket.id, values)
+                router.push(`/tickets/${ticket.id}`)
+                router.refresh()
+                //Here is why this refresh() is needed:
+                /**
+                 * Client-side Navigation: When using useRouter from next/navigation to navigate back to the Table page, Next.js performs a client-side navigation, which means it doesn't automatically trigger a full page reload or a re-fetch of data unless configured to do so.
+                 * Caching: Depending on how the data fetching is set up, the data might be cached and not automatically updated on client-side navigation.
+                 * Lack of Data Re-fetch Trigger: If your data fetching logic doesn't have a mechanism to re-fetch the data upon navigation, the Table page will display the old data it initially fetched.
+                 */
             } else {
                 await axios.post("/api/tickets/", values)
             }
@@ -48,14 +56,7 @@ const TicketForm = ({ ticket }: Props) => {
             //always a good practice to reset it back
             //cases are when user has slow speed, they might be confused.
 
-            router.push("/tickets")
-            router.refresh()
-            //Here is why this refresh() is needed:
-            /**
-             * Client-side Navigation: When using useRouter from next/navigation to navigate back to the Table page, Next.js performs a client-side navigation, which means it doesn't automatically trigger a full page reload or a re-fetch of data unless configured to do so.
-             * Caching: Depending on how the data fetching is set up, the data might be cached and not automatically updated on client-side navigation.
-             * Lack of Data Re-fetch Trigger: If your data fetching logic doesn't have a mechanism to re-fetch the data upon navigation, the Table page will display the old data it initially fetched.
-             */
+
         } catch (error) {
             console.log("error onSubmit: ", error)
             setError("Error Occured, please try again later.")
