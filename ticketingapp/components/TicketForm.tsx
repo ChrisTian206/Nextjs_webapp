@@ -48,7 +48,10 @@ const TicketForm = ({ ticket }: Props) => {
                  * Lack of Data Re-fetch Trigger: If your data fetching logic doesn't have a mechanism to re-fetch the data upon navigation, the Table page will display the old data it initially fetched.
                  */
             } else {
-                await axios.post("/api/tickets/", values)
+                const newTicket = await axios.post("/api/tickets/", values)
+                //console.log("newTicket here is: ", newTicket)
+                router.push(`/tickets/${newTicket.data.id}`)
+                router.refresh()
             }
             //ps. if values is {values}, it failed zodValidation. It would say invalid type for every field.
 

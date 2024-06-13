@@ -13,7 +13,7 @@ const Ticket = async ({ searchParams }: { searchParams: SearchParams }) => {
 
     const ticketsCount = await prisma.ticket.count()
     //console.log("ticket count: ", ticketsCount)
-    const pageSize = 5
+    const pageSize = 7
     /** why ' ||1 '
      * currentPage is page or 1. Because in the case where user jump from other page like Dashboard or profile
      * won't have the page param in the url, which could lead to failure.

@@ -18,5 +18,6 @@ export async function POST(request: NextRequest) {
         data: { ...body }
     })
 
+    //console.log("newTicket: ", newTicket)
     return NextResponse.json(newTicket, { status: 201 });
 }
