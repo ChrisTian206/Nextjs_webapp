@@ -5,9 +5,27 @@ import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import Pagination from '@/components/Pagination';
 
-const Ticket = async () => {
+interface SearchParams {
+    page: string
+}
 
-    const tickets = await prisma.ticket.findMany();
+const Ticket = async ({ searchParams }: { searchParams: SearchParams }) => {
+
+    const ticketsCount = await prisma.ticket.count()
+    //console.log("ticket count: ", ticketsCount)
+    const pageSize = 5
+    /** why ' ||1 '
+     * currentPage is page or 1. Because in the case where user jump from other page like Dashboard or profile
+     * won't have the page param in the url, which could lead to failure.
+     */
+    const currentPage = parseInt(searchParams.page) || 1
+    //console.log("current page: ", currentPage)
+
+    const tickets = await prisma.ticket.findMany({
+        take: pageSize,
+        skip: (currentPage - 1) * pageSize
+    });
+
 
     return (
         <div>
@@ -15,7 +33,7 @@ const Ticket = async () => {
             <DataTable tickets={tickets} />
 
             {/* CSR */}
-            <Pagination itemCount={50} currentPage={3} pageSize={5} />
+            <Pagination itemCount={ticketsCount} currentPage={currentPage} pageSize={pageSize} />
             {/*  */}
         </div>
     )

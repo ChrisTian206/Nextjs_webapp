@@ -14,6 +14,7 @@ interface Props {
 const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
 
     const pageCount = Math.ceil(itemCount / pageSize) //ceil() rounds up to whole number
+    //nsole.log(`There are ${itemCount} tickets, pageSize is ${pageSize}. So there should be ${pageCount} pages`)
     const router = useRouter()
     const searchParams = useSearchParams()
 
