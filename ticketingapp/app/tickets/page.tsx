@@ -3,6 +3,7 @@ import prisma from '@/prisma/db'
 import DataTable from './DataTable';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
+import Pagination from '@/components/Pagination';
 
 const Ticket = async () => {
 
@@ -12,6 +13,10 @@ const Ticket = async () => {
         <div>
             <Link href={"/tickets/new"} className={buttonVariants({ variant: "outline" })}>+ Add</Link>
             <DataTable tickets={tickets} />
+
+            {/* CSR */}
+            <Pagination itemCount={50} currentPage={3} pageSize={5} />
+            {/*  */}
         </div>
     )
 }

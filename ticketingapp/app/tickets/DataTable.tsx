@@ -11,7 +11,6 @@ interface Props {
 
 const DataTable = ({ tickets }: Props) => {
 
-    console.log(`Totol of ${tickets.length} Tickets printed from DataTable: `)
     return (
         <div className='w-full mt-5'>
             <div className='rounded-md sm:border'>
