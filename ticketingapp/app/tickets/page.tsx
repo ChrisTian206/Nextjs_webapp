@@ -4,6 +4,7 @@ import DataTable from './DataTable';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import Pagination from '@/components/Pagination';
+import StatusFilter from '@/components/StatusFilter';
 
 interface SearchParams {
     page: string
@@ -30,6 +31,7 @@ const Ticket = async ({ searchParams }: { searchParams: SearchParams }) => {
     return (
         <div>
             <Link href={"/tickets/new"} className={buttonVariants({ variant: "outline" })}>+ Add</Link>
+            <StatusFilter />
             <DataTable tickets={tickets} />
 
             {/* CSR */}
