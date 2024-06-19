@@ -17,7 +17,6 @@ const StatusFilter = () => {
     const router = useRouter()
     const searchParams = useSearchParams()
 
-
     return (
         <>
             <Select defaultValue={searchParams.get("status") || ""}
@@ -31,7 +30,7 @@ const StatusFilter = () => {
                     router.push(`/tickets${query}`)
                 }}>
 
-                <SelectTrigger>
+                <SelectTrigger className="w-[200px]">
                     <SelectValue placeholder="Status" />
                 </SelectTrigger>
 
