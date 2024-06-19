@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import Pagination from '@/components/Pagination';
 import StatusFilter from '@/components/StatusFilter';
+import { Status } from '@prisma/client';
 
 interface SearchParams {
+    status: Status
     page: string
 }
 
@@ -15,7 +17,7 @@ const Ticket = async ({ searchParams }: { searchParams: SearchParams }) => {
     const ticketsCount = await prisma.ticket.count()
     //console.log("ticket count: ", ticketsCount)
     const pageSize = 7
-    /** why ' ||1 '
+    /** why ' ||1 '? What if searchParams is empty?
      * currentPage is page or 1. Because in the case where user jump from other page like Dashboard or profile
      * won't have the page param in the url, which could lead to failure.
      */
@@ -26,6 +28,14 @@ const Ticket = async ({ searchParams }: { searchParams: SearchParams }) => {
         take: pageSize,
         skip: (currentPage - 1) * pageSize
     });
+
+    const validStatuses = Object.values(Status)
+
+    /** What if searchParams is empty?
+     * includes() returns a boolean. If searchParams is empty or not matching, then a false would be returned
+     * which 'status' will result in undefined.
+     */
+    const status = validStatuses.includes(searchParams.status) ? searchParams.status : undefined
 
 
     return (
