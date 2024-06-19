@@ -5,11 +5,15 @@ import TicketStatusBadge from '@/components/TicketStatusBadge'
 import TicketPriority from '@/components/TicketPriority'
 import Link from 'next/link'
 
+import { ArrowDown } from 'lucide-react'
+import { SearchParams } from './page'
+
 interface Props {
-    tickets: Ticket[]
+    tickets: Ticket[];
+    searchParams: SearchParams
 }
 
-const DataTable = ({ tickets }: Props) => {
+const DataTable = ({ tickets, searchParams }: Props) => {
 
     return (
         <div className='w-full mt-5'>
@@ -17,18 +21,46 @@ const DataTable = ({ tickets }: Props) => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Title</TableHead>
+                            <TableHead>
+                                <Link href={{ query: { ...searchParams, orderBy: "title" } }}>
+                                    Title
+                                </Link>
+                                {
+                                    searchParams.orderBy === "title" &&
+                                    (<ArrowDown className='inline p-1' />)
+                                }
+                            </TableHead>
                             <TableHead>
                                 <div className='flex justify-center'>
-                                    Status
+                                    <Link href={{ query: { ...searchParams, orderBy: "status" } }}>
+                                        Status
+                                    </Link>
+                                    {
+                                        searchParams.orderBy === "status" &&
+                                        (<ArrowDown className='inline p-1' />)
+                                    }
                                 </div>
                             </TableHead>
                             <TableHead>
                                 <div className='flex justify-center'>
-                                    Priority
+                                    <Link href={{ query: { ...searchParams, orderBy: "priority" } }}>
+                                        Priority
+                                    </Link>
+                                    {
+                                        searchParams.orderBy === "priority" &&
+                                        (<ArrowDown className='inline p-1' />)
+                                    }
                                 </div>
                             </TableHead>
-                            <TableHead>Created At</TableHead>
+                            <TableHead>
+                                <Link href={{ query: { ...searchParams, orderBy: "createdAt" } }}>
+                                    Created At
+                                </Link>
+                                {
+                                    searchParams.orderBy === "createdAt" &&
+                                    (<ArrowDown className='inline p-1' />)
+                                }
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
 
@@ -61,7 +93,7 @@ const DataTable = ({ tickets }: Props) => {
                     </TableBody>
                 </Table>
             </div>
-        </div>
+        </div >
     )
 }
 
