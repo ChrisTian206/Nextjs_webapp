@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     const isUserAlreadyExist = await prisma.user.findUnique({
         where: {
-            id: body.id
+            username: body.username
         }
     })
 
