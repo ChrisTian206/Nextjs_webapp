@@ -25,7 +25,9 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
 
     const validStatuses = Object.values(Status)
 
-    /** What if searchParams is empty?
+    const orderBy = searchParams.orderBy ? searchParams.orderBy : "createdAt"
+
+    /** What if searchParams is empty or not valid?
      * includes() returns a boolean. If searchParams is empty or not matching, then a false would be returned
      * which 'status' will result in undefined.
      */
@@ -37,6 +39,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
     } else {
         where = {
             NOT: [{ status: "CLOSED" }] //Lecture original:  NOT: [{ status: "CLOSED" as Status }] 
+
             /** Difference between having 'as Status' or not.
              * Both works. Without it, Prisma still perfectly understands what to extract.
              * With it, it tells TypeScript "CLOSED" is not just a string, it's a value in the Status. 
@@ -47,6 +50,14 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
 
     const tickets = await prisma.ticket.findMany({
         where,
+        orderBy: {
+            [orderBy]: 'desc'
+            /**[] here does not mean array.
+             * Because orderBy is being used as a dynamic key. Using JS's computed property names, that 
+             * developers can use variables as a key in a object.
+             */
+
+        },
         take: pageSize,
         skip: (currentPage - 1) * pageSize
     });
