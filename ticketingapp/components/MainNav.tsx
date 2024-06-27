@@ -13,7 +13,6 @@ const MainNav = () => {
                     <ToggleMode />
                 </div>
             </div>
-
         </>
     )
 }

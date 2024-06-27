@@ -12,7 +12,7 @@ const MainNavLinks = () => {
     ]
 
     const currPath = usePathname()
-    console.log(currPath)
+    //console.log(currPath)
     return (
         <div className='flex item-center gap-2'>
             {links.map((link) => {
