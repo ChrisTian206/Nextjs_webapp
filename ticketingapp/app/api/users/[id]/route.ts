@@ -25,10 +25,14 @@ export async function PATCH(request: NextRequest, { params }: Props) {
         return NextResponse.json({ message: "User not existed." }, { status: 404 })
     }
 
-    if (body?.password) {
+    if (body?.password && body.password != "") {
         const hashedPw = await bcryt.hash(body.password, 3)
         body.password = hashedPw;
+    } else {
+        delete body.password;
     }
+
+    console.log(body)
 
     if (user.username !== body.username) {
         const duplicateUsername = await prisma.user.findUnique({
